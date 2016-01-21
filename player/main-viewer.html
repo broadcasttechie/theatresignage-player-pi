@@ -1,13 +1,11 @@
 <html>
   <head>
-      <style>
-      
-          body {
-  transition: background-image 1s ease-in-out;
-          }
-      </style>
     <script>
-      window.setimg = function (uri) {
+      window.setimg = function (uri, fade) {
+          
+          fade = fade || 0;
+          
+          document.body.style.transition = "background-image " + fade + "s ease-in-out";
         var i = new Image();
         i.onload = function() {
         document.body.style.backgroundSize = i.width > window.innerWidth || i.height > window.innerHeight ? 'contain' : 'auto';
@@ -20,7 +18,7 @@
       
       window.demo = function () {
           window.setimg('./media/twelfth2-1080.jpg');
-           window.setTimeout(window.setimg('./media/greatex2-1080.jpg'),100000);
+           window.setTimeout(window.setimg('./media/greatex2-1080.jpg'),1000);
           ;
       }
       
