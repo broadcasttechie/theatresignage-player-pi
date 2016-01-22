@@ -1,31 +1,24 @@
 <html>
-  <head>
-    <script>
-      window.setimg = function (uri, fade) {
-          
-          fade = fade || 0;
-          
-          document.body.style.transition = "background-image " + fade + "s ease-in-out";
-        var i = new Image();
-        i.onload = function() {
-        document.body.style.backgroundSize = i.width > window.innerWidth || i.height > window.innerHeight ? 'contain' : 'auto';
-          document.body.style.backgroundImage = 'url(' + uri + ')';
-            
-        
-        }
-        i.src = uri;
-      }
+    <head>
+        <script>
+            window.setimg = function (uri, fade) {
+                fade = fade || 0;
+                document.body.style.transition = "background-image " + fade + "s ease-in-out";
+                document.body.style['-webkit-transition'] = "background-image " + fade + "s ease-in-out";
+                var i = new Image();
+                i.onload = function() {
+                    document.body.style.backgroundSize = i.width > window.innerWidth || i.height > window.innerHeight ? 'contain' : 'auto';
+                    document.body.style.backgroundImage = 'url(' + uri + ')';
+                }
+                i.src = uri;
+            }
       
-      window.demo = function () {
-          window.setimg('./media/twelfth2-1080.jpg');
-           window.setTimeout(window.setimg('./media/greatex2-1080.jpg'),1000);
-          ;
-      }
-      
-    </script>
-  </head>
-  <body style="background: #000 center no-repeat"
-        onLoad="window.demo()"
-        
-        ><div id="my_image" class="shadow"></div></body>
+            window.demo = function () {
+                window.setimg('./media/twelfth2-1080.jpg');
+                window.setTimeout(window.setimg('./media/greatex2-1080.jpg'),1000);
+            }
+        </script>
+    </head>
+    <body style="background: #000 center no-repeat"
+        onLoad="window.demo()" ></body>
 </html>
