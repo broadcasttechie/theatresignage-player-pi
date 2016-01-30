@@ -7,6 +7,14 @@ import json
 import md5
 import hashlib
 
+
+from bottle import static_file
+
+@route('/static/<filepath:path>')
+def server_static(filepath):
+    return static_file(filepath, root='./static')
+    
+
 @route('/getplaylist')
 def getplaylist():
 	response = urllib2.urlopen('http://localhost:8000/playlist/2')
