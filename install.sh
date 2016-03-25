@@ -62,6 +62,15 @@ echo "Configure player starup"
 
 
 
+echo "Configure supervisor"
+echo "Adding Screenly to autostart (via Supervisord)"
+#sudo ln -s "$HOME/ts/misc/supervisord.conf" /etc/supervisor/supervisord.conf
+#sudo ln -s "$HOME/ts/misc/supervisord.conf" /etc/supervisord.conf
+sudo ln -s "$HOME/ts/misc/supervisor_player.conf" /etc/supervisor/conf.d/player.conf
+sudo ln -s "$HOME/ts/misc/supervisor_server.conf" /etc/supervisor/conf.d/server.conf
+sudo supervisorctl reread
+
+
 echo "Increasing swap space to 500MB..."
 echo "CONF_SWAPSIZE=500" > "$HOME/dphys-swapfile"
 sudo cp /etc/dphys-swapfile /etc/dphys-swapfile.bak
@@ -94,8 +103,8 @@ fi
 
 echo "Install boot splash"
 #http://www.edv-huber.com/index.php/problemloesungen/15-custom-splash-screen-for-raspberry-pi-raspbian
-sudo cp $HOME/ts/asplashscreen /etc/init.d/asplashscreen
-sudo cp pi_loading.sh /etc/splash.png
+sudo cp $HOME/ts/misc/asplashscreen /etc/init.d/asplashscreen
+sudo cp $HOME/ts/misc/pi_loading.sh /etc/splash.png
 sudo chmod a+x /etc/init.d/asplashscreen
 sudo insserv /etc/init.d/asplashscreen
 
