@@ -30,7 +30,7 @@ echo "Install some stuff"
 
 sudo dpkg-reconfigure ssh
 
-sudo apt-get install -y scrot git lsb-core fbi uzbl matchbox-window-manager supervisor x11-xserver-utils ttf-mscorefonts-installer xwit sqlite3 libnss3 python-pip python-dev python-simplejson python-imaging uzbl sqlite3 omxplayer x11-xserver-utils libx11-dev watchdog chkconfig
+sudo apt-get install -y xinit scrot git lsb-core fbi uzbl matchbox-window-manager supervisor x11-xserver-utils ttf-mscorefonts-installer xwit sqlite3 libnss3 python-pip python-dev python-simplejson python-imaging uzbl sqlite3 omxplayer x11-xserver-utils libx11-dev watchdog chkconfig
 
 echo "Install Hamachi"
 wget https://secure.logmein.com/labs/logmein-hamachi_2.1.0.139-1_armhf.deb
@@ -46,7 +46,7 @@ sudo ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 
 echo "Python stuff"
 
-sudo pip install Mako MarkupSafe PyHAML bottle bottle-haml hurry.filesize netifaces pytz requests sh==1.08 six uptime wsgiref werkzeug pyscreenshot
+sudo pip install Mako MarkupSafe PyHAML bottle bottle-haml hurry.filesize netifaces pytz requests sh==1.08 six uptime wsgiref werkzeug pyscreenshot	
 
 
 echo "Install player"
@@ -66,6 +66,8 @@ sudo sed -i -e '$i \su - pi -c startx \& ' /etc/rc.local
 sudo sed -i -e '$i \fi\n' /etc/rc.local
 
 sudo cp $HOME/ts/misc/xinitrc /boot/xinitrc
+
+sudo sed -i 's/allowed_users=console/allowed_users=anybody/' /etc/X11/Xwrapper.config
 
 #TODO must prompt for server and channel number
 
