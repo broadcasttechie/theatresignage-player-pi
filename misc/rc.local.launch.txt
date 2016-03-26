@@ -1,7 +1,4 @@
-
-
 /etc/init.d/logmein-hamachi start
-
 hamachi login &
 
 

@@ -46,19 +46,31 @@ sudo ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 
 echo "Python stuff"
 
-sudo pip install Mako MarkupSafe PyHAML bottle bottle-haml hurry.filesize netifaces pytz requests sh==1.08 six uptime wsgiref werzeug
+sudo pip install Mako MarkupSafe PyHAML bottle bottle-haml hurry.filesize netifaces pytz requests sh==1.08 six uptime wsgiref werkzeug pyscreenshot
 
 
 echo "Install player"
 git clone https://github.com/broadcasttechie/theatresignage-player-pi.git "$HOME/ts"
 
 
-echo "Configure player starup"
+echo "Configure player startup"
 #http://blogs.wcode.org/2013/09/howto-boot-your-raspberry-pi-into-a-fullscreen-browser-kiosk/
 
 
+sudo sed -i -e '$i \/etc/init.d/logmein-hamachi start' /etc/rc.local
+sudo sed -i -e '$i \hamachi login \&\n' /etc/rc.local
 
+sudo sed -i -e '$i \if \[ \-f /boot/xinitrc \]\; then' /etc/rc.local
+sudo sed -i -e '$i \    \tln -fs /boot/xinitrc /home/pi/\.xinitrc;' /etc/rc.local
+sudo sed -i -e '$i \su - pi -c startx \& ' /etc/rc.local
+sudo sed -i -e '$i \fi\n' /etc/rc.local
 
+sudo cp $HOME/ts/misc/xinitrc /boot/xinitrc
+
+#TODO must prompt for server and channel number
+
+sudo chmod a+x $HOME/ts/player.py
+sudo chmod a+x $HOME/ts/server/server.py
 
 echo "Configure supervisor"
 echo "Adding Screenly to autostart (via Supervisord)"
