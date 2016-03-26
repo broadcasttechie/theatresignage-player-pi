@@ -19,9 +19,7 @@ if [ $ROOT_AVAIL -lt $MIN_REQ ]; then
 	exit 1
 fi
 
-echo "Use raspi-config to set graphics split etc."
-read -p "Press enter to continue"
-sudo raspi-config
+
 
 echo "Updating system"
 
@@ -32,7 +30,7 @@ echo "Install some stuff"
 
 sudo dpkg-reconfigure ssh
 
-sudo apt-get install -y scrot lsb-core fbi uzbl matchbox-window-manager supervisor x11-xserver-utils ttf-mscorefonts-installer xwit sqlite3 libnss3 python-pip python-dev python-simplejson python-imaging uzbl sqlite3 omxplayer x11-xserver-utils libx11-dev watchdog chkconfig
+sudo apt-get install -y scrot git lsb-core fbi uzbl matchbox-window-manager supervisor x11-xserver-utils ttf-mscorefonts-installer xwit sqlite3 libnss3 python-pip python-dev python-simplejson python-imaging uzbl sqlite3 omxplayer x11-xserver-utils libx11-dev watchdog chkconfig
 
 echo "Install Hamachi"
 wget https://secure.logmein.com/labs/logmein-hamachi_2.1.0.139-1_armhf.deb
@@ -77,7 +75,7 @@ sudo cp /etc/dphys-swapfile /etc/dphys-swapfile.bak
 sudo mv "$HOME/dphys-swapfile" /etc/dphys-swapfile
 
 
-cho "Enabling Watchdog..."
+echo "Enabling Watchdog..."
 sudo modprobe bcm2708_wdog > /dev/null
 sudo cp /etc/modules /etc/modules.bak
 sudo sed '$ i\bcm2708_wdog' -i /etc/modules
@@ -104,7 +102,7 @@ fi
 echo "Install boot splash"
 #http://www.edv-huber.com/index.php/problemloesungen/15-custom-splash-screen-for-raspberry-pi-raspbian
 sudo cp $HOME/ts/misc/asplashscreen /etc/init.d/asplashscreen
-sudo cp $HOME/ts/misc/pi_loading.sh /etc/splash.png
+sudo cp $HOME/ts/misc/pi_loading.png /etc/splash.png
 sudo chmod a+x /etc/init.d/asplashscreen
 sudo insserv /etc/init.d/asplashscreen
 
