@@ -76,4 +76,4 @@ def screenshot_thumb():
 	return image_buffer
 	
 
-run(host="0.0.0.0", port=81, fast=True, reloader=True)
+run(host="0.0.0.0", port=8080, fast=True, reloader=True)
