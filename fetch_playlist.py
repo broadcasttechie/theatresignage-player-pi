@@ -110,7 +110,7 @@ try:
     	url = item['url']
     	mediadir = path.join(HOME,APP,MEDIA)
     	if not path.exists(mediadir):
-    		os.makedirs(mediadir)
+    		makedirs(mediadir)
     	
     	localpath = path.join(mediadir, item['uri'])
     	
