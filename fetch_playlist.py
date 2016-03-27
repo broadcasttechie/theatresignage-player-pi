@@ -11,7 +11,7 @@ import urllib
 #from utils import url_fails
 from urlparse import urlparse
 from requests import get as req_get
-from os import path, getenv, utime
+from os import path, getenv, utime, makedirs
 import logging
 
 
@@ -109,7 +109,7 @@ try:
     for item in r.json()['data']['playlist']:
     	url = item['url']
     	mediadir = path.join(HOME,APP,MEDIA)
-    	if not os.path.exists(mediadir):
+    	if not path.exists(mediadir):
     		os.makedirs(mediadir)
     	
     	localpath = path.join(mediadir, item['uri'])
