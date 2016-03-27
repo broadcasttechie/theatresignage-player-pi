@@ -108,7 +108,11 @@ try:
     
     for item in r.json()['data']['playlist']:
     	url = item['url']
-    	localpath = path.join(HOME, APP, MEDIA, item['uri'])
+    	mediadir = path.join(HOME,APP,MEDIA)
+    	if not os.path.exists(mediadir):
+    		os.makedirs(mediadir)
+    	
+    	localpath = path.join(mediadir, item['uri'])
     	
     	#print url
     	site = urllib.urlopen(url)
