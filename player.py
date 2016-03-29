@@ -141,15 +141,11 @@ def get_playlist():
     con = lite.connect(path.join(HOME, APP, DATABASE))
     con.row_factory = lite.Row
     cur = con.cursor()
-    playlist = cur.execute('SELECT * from playlist')
+    playlist = cur.execute("SELECT * FROM playlist WHERE where DATETIME(start) < DATETIME('now') AND DATETIME(stop) > DATETIME('now')")
     pl = list(playlist)
     if con:
         con.close()
     return pl
-    #pl = copy.deepcopy(playlist)
-    #for row in playlist:
-    #    print row['type'], row['uri']
-    #return playlist
 
 def play_playlist(playlist):
     #print playlist
@@ -162,6 +158,8 @@ def play_playlist(playlist):
                 sleep(row['duration'])
             else:
                 sleep(0.5)
+        else if 'VIDEO' in row['type']:
+        	print 'Video'
         else:
             sleep(0.5)
 
