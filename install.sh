@@ -41,7 +41,7 @@ sudo hamachi attach kristan@webbitpro.co.uk
 echo "Configure ntp"
 #http://raspberrypi.stackexchange.com/questions/266/how-can-i-keep-system-time
 #https://www.raspberrypi.org/forums/viewtopic.php?f=91&t=16058
-sudo echo "DAEMONS(!hwclock ntpd ntpdate)" >> /etc/rc.conf
+echo "DAEMONS(!hwclock ntpd ntpdate)"  | sudo tee --append /etc/rc.conf
 sudo ln -sf /usr/share/zoneinfo/Europe/London /etc/localtime
 
 echo "Python stuff"
