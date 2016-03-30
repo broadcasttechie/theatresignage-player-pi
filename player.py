@@ -161,11 +161,12 @@ def play_playlist(playlist):
                 view_image(assetfile)
                 sleep(row['duration'])
             else:
-                sleep(0.5)
+                sleep(1)
         elif 'VIDEO' in row['type']:
             print 'Video'
         else:
-            sleep(0.5)
+            sleep(1)
+    sleep(0.5)
 
 
 def setup():
