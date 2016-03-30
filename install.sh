@@ -13,8 +13,8 @@ MIN_REQ="512000"
 
 if [ $ROOT_AVAIL -lt $MIN_REQ ]; then
 	echo "Insufficient disk space. Make sure you have at least 500MB available on the root partition."
-	read -p "Use raspi-config to expand root fs and reboot."
-	sudo raspi-config
+	#read -p "Use raspi-config to expand root fs and reboot."
+	#sudo raspi-config
 	sudo reboot
 	exit 1
 fi
@@ -24,7 +24,7 @@ fi
 echo "Updating system"
 
 sudo apt-get update
-sudo apt-get upgrade
+sudo apt-get upgrade -y
 
 echo "Install some stuff"
 
@@ -82,6 +82,8 @@ sudo ln -s "$HOME/ts/misc/supervisor_player.conf" /etc/supervisor/conf.d/player.
 sudo ln -s "$HOME/ts/misc/supervisor_server.conf" /etc/supervisor/conf.d/server.conf
 sudo supervisorctl reread
 
+echo "Add cron config"
+sudo ln -s "$HOME/ts/misc/cron" /etc/crond.d/tsplayer
 
 echo "Increasing swap space to 500MB..."
 echo "CONF_SWAPSIZE=500" > "$HOME/dphys-swapfile"
