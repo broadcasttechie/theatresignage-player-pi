@@ -1,1 +1,1 @@
-*/5 * * * * pi python $HOME/ts/fetch_playlist.py > /tmp/fetch_playlist.latest 2>&1
+*/5 * * * * pi python /home/pi/ts/fetch_playlist.py > /tmp/fetch_playlist.latest 2>&1
