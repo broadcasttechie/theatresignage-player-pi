@@ -163,7 +163,7 @@ def play_playlist(playlist):
             else:
                 sleep(0.5)
         elif 'VIDEO' in row['type']:
-        	print 'Video'
+            print 'Video'
         else:
             sleep(0.5)
 
@@ -201,10 +201,10 @@ def main():
     while True:
         #asset_loop(scheduler)
         pl = get_playlist()
-            if pl == None:
-                sleep(30)
-            else:
-                play_playlist(pl)
+        if pl == None:
+            sleep(30)
+        else:
+            play_playlist(pl)
 
 
 
