@@ -138,14 +138,18 @@ def dict_gen(curs):
 
 def get_playlist():
     #print path.join(HOME, APP, DATABASE)
-    con = lite.connect(path.join(HOME, APP, DATABASE) , detect_types=lite.PARSE_DECLTYPES|lite.PARSE_COLNAMES)
-    con.row_factory = lite.Row
-    cur = con.cursor()
-    playlist = cur.execute("SELECT * FROM playlist WHERE DATETIME(start) < DATETIME('now') AND DATETIME(stop) > DATETIME('now')")
-    pl = list(playlist)
-    if con:
-        con.close()
-    return pl
+    dbpath = path.join(HOME, APP, DATABASE)
+    if path.isfile(assetfile):
+        con = lite.connect(dbpath, detect_types=lite.PARSE_DECLTYPES|lite.PARSE_COLNAMES)
+        con.row_factory = lite.Row
+        cur = con.cursor()
+        playlist = cur.execute("SELECT * FROM playlist WHERE DATETIME(start) < DATETIME('now') AND DATETIME(stop) > DATETIME('now')")
+        pl = list(playlist)
+        if con:
+           con.close()
+        return pl
+    else:
+        return None
 
 def play_playlist(playlist):
     #print playlist
@@ -194,25 +198,14 @@ def main():
 
     #scheduler = Scheduler()
     logging.debug('Entering infinite loop.')
-    #browser_url('http://ts.zamia.co.uk/playlist/2/player')
     while True:
         #asset_loop(scheduler)
         pl = get_playlist()
-        play_playlist(pl)
-        #mediaroot =  path.join(HOME , APP, MEDIA)
-        #delay = 5
-        #sleep(3)
-        #view_image(mediaroot + 'greatex2-1080.jpg')
-        #sleep(delay)
-        #view_image(mediaroot + 'twelfth2-1080.jpg')
-        #sleep(delay)
-        #view_image(mediaroot + 'grimm-1080.jpg')
-        #sleep(delay)
-        #view_image(mediaroot + 'twelfth2-final1C_150rgb.jpg')
-        #browser_url('http://bbc.co.uk/news')
-        #sleep(delay)
-        #browser_url('http://bbc.co.uk/cbbc')
-        #sleep(delay)
+            if pl == None:
+                sleep(30)
+            else:
+                play_playlist(pl)
+
 
 
 if __name__ == "__main__":
