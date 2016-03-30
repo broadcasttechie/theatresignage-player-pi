@@ -141,7 +141,7 @@ def get_playlist():
     con = lite.connect(path.join(HOME, APP, DATABASE) , detect_types=lite.PARSE_DECLTYPES|lite.PARSE_COLNAMES)
     con.row_factory = lite.Row
     cur = con.cursor()
-    playlist = cur.execute("SELECT * FROM playlist WHERE where DATETIME(start) < DATETIME('now') AND DATETIME(stop) > DATETIME('now')")
+    playlist = cur.execute("SELECT * FROM playlist WHERE DATETIME(start) < DATETIME('now') AND DATETIME(stop) > DATETIME('now')")
     pl = list(playlist)
     if con:
         con.close()
