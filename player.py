@@ -139,7 +139,7 @@ def dict_gen(curs):
 def get_playlist():
     #print path.join(HOME, APP, DATABASE)
     dbpath = path.join(HOME, APP, DATABASE)
-    if path.isfile(assetfile):
+    if path.isfile(dbpath):
         con = lite.connect(dbpath, detect_types=lite.PARSE_DECLTYPES|lite.PARSE_COLNAMES)
         con.row_factory = lite.Row
         cur = con.cursor()
