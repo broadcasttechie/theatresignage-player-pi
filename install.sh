@@ -24,11 +24,11 @@ fi
 echo "Updating system"
 
 sudo apt-get update
-sudo apt-get upgrade -y
+# sudo apt-get upgrade -y
 
 echo "Install some stuff"
 
-sudo dpkg-reconfigure ssh
+# sudo dpkg-reconfigure ssh
 
 sudo apt-get install -y xinit scrot git lsb-core fbi uzbl matchbox-window-manager supervisor x11-xserver-utils ttf-mscorefonts-installer xwit sqlite3 libnss3 python-pip python-dev python-simplejson python-imaging uzbl sqlite3 omxplayer x11-xserver-utils libx11-dev watchdog chkconfig
 
