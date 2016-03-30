@@ -138,7 +138,7 @@ def dict_gen(curs):
 
 def get_playlist():
     #print path.join(HOME, APP, DATABASE)
-    con = lite.connect(path.join(HOME, APP, DATABASE))
+    con = lite.connect(path.join(HOME, APP, DATABASE) , detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
     con.row_factory = lite.Row
     cur = con.cursor()
     playlist = cur.execute("SELECT * FROM playlist WHERE where DATETIME(start) < DATETIME('now') AND DATETIME(stop) > DATETIME('now')")
@@ -158,7 +158,7 @@ def play_playlist(playlist):
                 sleep(row['duration'])
             else:
                 sleep(0.5)
-        else if 'VIDEO' in row['type']:
+        elif 'VIDEO' in row['type']:
         	print 'Video'
         else:
             sleep(0.5)
