@@ -83,7 +83,7 @@ sudo ln -s "$HOME/ts/misc/supervisor_server.conf" /etc/supervisor/conf.d/server.
 sudo supervisorctl reread
 
 echo "Add cron config"
-sudo ln -s "$HOME/ts/misc/cron" /etc/cron.d/tsplayer
+sudo cp "$HOME/ts/misc/cron" /etc/cron.d/tsplayer
 
 echo "Increasing swap space to 500MB..."
 echo "CONF_SWAPSIZE=500" > "$HOME/dphys-swapfile"
