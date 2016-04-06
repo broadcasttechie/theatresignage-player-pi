@@ -69,7 +69,7 @@ try:
     con = lite.connect(path.join(HOME, APP, 'player.db'))
     
     cur = con.cursor()         
-    cur.execute('CREATE TABLE if not exists playlist(uri TEXT PRIMARY KEY, type TEXT, url TEXT, start TEXT, stop TEXT, duration INT)')
+    cur.execute('CREATE TABLE if not exists playlist(uri TEXT, type TEXT, url TEXT, start TEXT, stop TEXT, duration INT)')
     cur.execute('CREATE TABLE if not exists meta(id INT, name TEXT, hash TEXT)')
     
     cur.execute('DELETE FROM playlist')
