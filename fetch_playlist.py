@@ -11,8 +11,9 @@ import urllib
 #from utils import url_fails
 from urlparse import urlparse
 from requests import get as req_get
-from os import path, getenv, utime, makedirs
+from os import path, getenv, utime, makedirs, system
 import logging
+#from subprocess import call
 
 
 SERVER = 'ts.zamia.co.uk'
@@ -68,12 +69,25 @@ def url_fails(url):
 try:
     con = lite.connect(path.join(HOME, APP, 'player.db'))
     
-    cur = con.cursor()         
+    cur = con.cursor()  
+    
+    #build database if not exists
     cur.execute('CREATE TABLE if not exists playlist(uri TEXT, type TEXT, url TEXT, start TEXT, stop TEXT, duration INT)')
     cur.execute('CREATE TABLE if not exists meta(id INT, name TEXT, hash TEXT)')
     
-    cur.execute('DELETE FROM playlist')
-    cur.execute('VACUUM')
+    
+    #test server connection first (and valid data before dropping playlist)
+    
+    
+    if not url_fails('http://' + SERVER):
+        #can connect to server 
+        print "Connected"
+        
+        
+    else:
+        system("echo Connection to server lost | DISPLAY=:0 osd_cat  --pos=bottom --align=center --color=white -f '-*-*-bold-*-*-*-24-*' --offset=-100 --outline=2 --delay=30")
+
+    
     
     if last_update is None or last_update < (datetime.now() - timedelta(seconds=1)):
 
@@ -81,8 +95,11 @@ try:
             latest_sha = req_get('http://' + SERVER + '/playlist/' + CHANNEL + '/hash')
 
             if latest_sha.status_code == 200:
-                with open(sha_file, 'w') as f:
-                    f.write(latest_sha.content.strip())
+            
+            
+                print "hash valid"
+                #with open(sha_file, 'w') as f:
+                #    f.write(latest_sha.content.strip())
                 #return True
             else:
                 logging.debug('Received non 200-status')
@@ -91,53 +108,65 @@ try:
             logging.debug('Unable to retreive latest SHA')
 
 
-	with open(sha_file, 'r') as f:
-		current_sha = f.read()
+    with open(sha_file, 'r') as f:
+        current_sha = f.read()
     
     r = requests.get('http://' + SERVER + '/playlist/' + CHANNEL)
-    
     print "hash from web", r.json()['hash']
     print "previous hash", current_sha
     
     if (current_sha != r.json()['hash']):
-    	print 'mismatch'
-    cur.executemany('INSERT INTO playlist VALUES (:uri, :type, :url, :start, :stop, :duration)', r.json()['data']['playlist'])
+        print 'Hash changed, update database'
+        mymeta = (
+            int(r.json()['data']['meta']['id']),
+            r.json()['data']['meta']['name'],
+            r.json()['hash']
+            )
+        cur.execute('DELETE FROM playlist')
+        cur.execute('DELETE FROM meta')
+        cur.execute('VACUUM')
+        cur.executemany('INSERT INTO playlist VALUES (:uri, :type, :url, :start, :stop, :duration)', r.json()['data']['playlist'])
+        cur.execute('INSERT INTO meta VALUES (:id, :name, :hash)', mymeta)
+        con.commit()
+        with open(sha_file, 'w') as f:
+            f.write(r.json()['hash'])
+        print 'Database updated'
+    else:
+        print 'Hash matched, not updating.'
     
-    
-    con.commit()
     
     for item in r.json()['data']['playlist']:
-    	url = item['url']
-    	mediadir = path.join(HOME,APP,MEDIA)
-    	if not path.exists(mediadir):
-    		makedirs(mediadir)
-    	
-    	localpath = path.join(mediadir, item['uri'])
-    	
-    	#print url
-    	site = urllib.urlopen(url)
-    	meta = site.info()
-    	#print "content-length" , meta.getheaders("Content-Length")[0]
-    	
-    	#check if file already exists
-    	if (path.isfile(localpath)):
+        url = item['url']
+        mediadir = path.join(HOME,APP,MEDIA)
+        if not path.exists(mediadir):
+            makedirs(mediadir)
+        
+        localpath = path.join(mediadir, item['uri'])
+        
+        #print url
+        site = urllib.urlopen(url)
+        meta = site.info()
+        #print "content-length" , meta.getheaders("Content-Length")[0]
+        
+        #check if file already exists
+        if (path.isfile(localpath)):
             f = open(localpath, "rb")
             #print "File on disk:",len(f.read())
             locallen = len(f.read()) 
             remotelen =  meta.getheaders("Content-Length")[0]
             if (int(locallen) == int(remotelen)):
-            	#download    	
+                #download        
                 print "Not downloading %s again" % item['uri']
             else:
-            	print "Size difference, downloading %s" % url
-            	urllib.urlretrieve (url, localpath)
+                print "Size difference, downloading %s" % url
+                urllib.urlretrieve (url, localpath)
             f.close()
         else:
-        	#download
+            #download
             print "Downloading %s" % url
             urllib.urlretrieve (url, localpath)
-        	
-        	 
+            
+             
     #cur.execute('SELECT * from playlist')
     
     #data = cur.fetchone()
@@ -153,3 +182,4 @@ finally:
     
     if con:
         con.close()
+
