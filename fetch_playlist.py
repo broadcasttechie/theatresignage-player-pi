@@ -13,8 +13,10 @@ from urlparse import urlparse
 from requests import get as req_get
 from os import path, getenv, utime, makedirs, system
 import logging
+import datetime
 #from subprocess import call
 
+print('Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()))
 
 SERVER = 'ts.zamia.co.uk'
 CHANNEL = '2'
@@ -85,7 +87,9 @@ try:
         
         
     else:
+        print "Unable to connect to server " + SERVER
         system("echo Connection to server lost | DISPLAY=:0 osd_cat  --pos=bottom --align=center --color=white -f '-*-*-bold-*-*-*-24-*' --offset=-100 --outline=2 --delay=30")
+        exit()
 
     
     
