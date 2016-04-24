@@ -88,7 +88,7 @@ try:
         
     else:
         print "Unable to connect to server " + SERVER
-        system("echo Connection to server lost | DISPLAY=:0 osd_cat  --pos=bottom --align=center --color=white -f '-*-*-bold-*-*-*-24-*' --offset=-100 --outline=2 --delay=30")
+        system("echo Failed to update playlist | DISPLAY=:0 osd_cat  --pos=bottom --align=right --color=white -f '-*-*-bold-*-*-*-24-*' --offset=-100 --outline=2 --delay=30")
         exit()
 
     
