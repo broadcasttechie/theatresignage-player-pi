@@ -111,9 +111,11 @@ try:
         else:
             logging.debug('Unable to retreive latest SHA')
 
-
-    with open(sha_file, 'r') as f:
-        current_sha = f.read()
+    if path.isfile(sha_file):
+        with open(sha_file, 'r') as f:
+            current_sha = f.read()
+    else:
+        current_sha = ""
     
     r = requests.get('http://' + SERVER + '/playlist/' + CHANNEL)
     print "hash from web", r.json()['hash']
