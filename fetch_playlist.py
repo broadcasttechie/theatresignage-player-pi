@@ -39,9 +39,9 @@ def validate_url(string):
     False
     >>> validate_url("http://")
     False
-    >>> validate_url("http://wireload.net/logo.png")
+    >>> validate_url("http://example.com/logo.png")
     True
-    >>> validate_url("https://wireload.net/logo.png")
+    >>> validate_url("https://example.com/logo.png")
     True
 
     """
@@ -88,7 +88,7 @@ try:
         
     else:
         print "Unable to connect to server " + SERVER
-        system("echo Failed to update playlist | DISPLAY=:0 osd_cat  --pos=bottom --align=right --color=white -f '-*-*-bold-*-*-*-24-*' --offset=-100 --outline=2 --delay=30")
+        system("echo Failed to update playlist    | DISPLAY=:0 osd_cat  --pos=bottom --align=right --color=white -f '-*-*-bold-*-*-*-22-*' --offset=-100 --outline=2 --delay=30")
         exit()
 
     
