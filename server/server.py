@@ -14,8 +14,24 @@ from easyprocess import EasyProcess
 import tempfile
 from PIL import Image
 import os
+import ConfigParser
 
 from bottle import static_file
+
+
+configfile = '/home/pi/ts/player.ini'
+
+Config = ConfigParser.ConfigParser()
+if os.path.isfile(configfile):
+	Config.read(configfile)
+else:
+	cfgfile = open(configfile,'w+')
+	Config.add_section('player')
+	Config.set('player','server','ts.zamia.co.uk')
+	Config.set('player','channel','2')
+	Config.write(cfgfile)
+	cfgfile.close()
+
 
 @route('/static/<filepath:path>')
 def server_static(filepath):
@@ -33,7 +49,10 @@ def getplaylist():
 	return hashlib.md5(json.dumps(data['data'])).hexdigest()
     
     
-
+@route('/')
+def index():
+	output = Config.get('player','server') + ":" + Config.get('player','channel')
+	return output
     
 @route('/splash')
 def splash():

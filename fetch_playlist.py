@@ -15,11 +15,27 @@ from os import path, getenv, utime, makedirs, system
 import logging
 import datetime
 #from subprocess import call
-
+import ConfigParser
 print('Timestamp: {:%Y-%m-%d %H:%M:%S}'.format(datetime.datetime.now()))
 
-SERVER = 'ts.zamia.co.uk'
-CHANNEL = '2'
+
+
+configfile = '/home/pi/ts/player.ini'
+
+Config = ConfigParser.ConfigParser()
+if path.isfile(configfile):
+	Config.read(configfile)
+else:
+	cfgfile = open(configfile,'w+')
+	Config.add_section('player')
+	Config.set('player','server','ts.zamia.co.uk')
+	Config.set('player','channel','2')
+	Config.write(cfgfile)
+	cfgfile.close()
+
+
+SERVER = Config.get('player','server')
+CHANNEL = Config.get('player','channel')
 HOME = '/home/pi'
 APP = 'ts'
 MEDIA = 'media'
