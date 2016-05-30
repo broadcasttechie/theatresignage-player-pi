@@ -15,8 +15,8 @@ import tempfile
 from PIL import Image
 import os
 import ConfigParser
-
-from bottle import static_file
+import socket
+from bottle import static_file, redirect
 
 
 configfile = '/home/pi/ts/player.ini'
@@ -51,9 +51,17 @@ def getplaylist():
     
 @route('/')
 def index():
-	output = Config.get('player','server') + ":" + Config.get('player','channel')
-	return output
-    
+	return template('home', server=Config.get('player','server'), channel=Config.get('player','channel'))
+
+@route('/', method='POST')
+def do_save():
+	Config.set('player', 'server', request.forms.get('server'))
+	Config.set('player', 'channel', request.forms.get('channel'))
+	cfgfile = open(configfile,'w+')
+	Config.write(cfgfile)
+	cfgfile.close()
+	redirect('/')
+
 @route('/splash')
 def splash():
 	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
