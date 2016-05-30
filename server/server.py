@@ -56,7 +56,11 @@ def index():
     
 @route('/splash')
 def splash():
-    return template('splash')
+	s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+	s.connect(("gmail.com",80))
+	host=s.getsockname()[0]
+	s.close()
+	return template('splash', host=host, server=Config.get('player','server'), channel=Config.get('player','channel'))
 
 quality = '30'
 	

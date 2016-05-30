@@ -27,10 +27,10 @@
 	<div class="row">
 		<div class="col-md-12">
 			<p class="lead">
-				Player not configured.
+				Playlist server: {{server}}, channel: {{channel}}
 			</p>
 			<div class="well lead text-center">
-				xxx.xxx.xxx.xxx:xxxx
+				{{host}}:8080
 			</div>
 		</div>
 	</div>
