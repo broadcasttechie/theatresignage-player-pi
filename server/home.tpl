@@ -13,6 +13,12 @@
 		
 		}
 		</style>
+		<script>
+		setInterval(function() {
+			var myImageElement = document.getElementById('thumb');
+			myImageElement.src = '/screenshot/thumb?rand=' + Math.random();
+		}, 1000);
+		</script>
 </html>
 <body>
 <div class="container">
@@ -28,7 +34,7 @@
 		<div class="col-md-12">
 			<p class="lead">
 				
-				<img src="/screenshot/thumb" />
+				<img src="/screenshot/thumb" id="thumb"/>
 			</p>
 			<div class="well lead text-center">
 				<form class="form-horizontal" method="POST">
