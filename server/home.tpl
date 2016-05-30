@@ -17,7 +17,7 @@
 		setInterval(function() {
 			var myImageElement = document.getElementById('thumb');
 			myImageElement.src = '/screenshot/thumb?rand=' + Math.random();
-		}, 1000);
+		}, 2000);
 		</script>
 </html>
 <body>
