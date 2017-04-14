@@ -123,6 +123,11 @@ def browser_clear(force=False):
     #browser_url('file://' + BLACK_PAGE, force=force, cb=lambda buf: 'LOAD_FINISH' in buf and BLACK_PAGE in buf)
     browser_url('file://' + path.join(HOME, APP, BLACK_PAGE), force=force, cb=lambda buf: 'LOAD_FINISH' in buf and BLACK_PAGE in buf)
 
+def view_video(asset):
+    browser_clear(force=True)
+    print asset
+    sh.Command('hello_video.bin')(asset)
+    browser_clear(force=True)
 
 
 def dict_gen(curs):
@@ -163,7 +168,14 @@ def play_playlist(playlist):
             else:
                 sleep(1)
         elif 'VIDEO' in row['type']:
-            print 'Video'
+            #print 'Video'
+            assetfile = path.join(HOME, APP, MEDIA, row['uri'])
+            if path.isfile(assetfile):
+                view_video(assetfile)
+                #sleep(row['duration'])
+            else:
+                sleep(1)
+            
         else:
             sleep(1)
     sleep(0.5)
