@@ -50,6 +50,15 @@ echo "Python stuff"
 sudo pip install Mako MarkupSafe PyHAML bottle bottle-haml hurry.filesize netifaces pytz requests sh==1.08 six uptime wsgiref werkzeug pyscreenshot	
 
 
+echo "Install hello_video.bin"
+git clone https://github.com/broadcasttechie/pi_hello_video.git
+cd pi_hello_video/
+sudo ./rebuild.sh 
+cd hello_video
+sudo make install
+cd
+
+
 echo "Install player"
 git clone https://github.com/broadcasttechie/theatresignage-player-pi.git "$HOME/ts"
 
