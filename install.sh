@@ -30,11 +30,12 @@ echo "Install some stuff"
 
 # sudo dpkg-reconfigure ssh
 
-sudo apt-get install -y xinit scrot git lsb-core fbi uzbl matchbox-window-manager supervisor x11-xserver-utils ttf-mscorefonts-installer xwit sqlite3 libnss3 python-pip python-dev python-simplejson python-imaging uzbl sqlite3 omxplayer x11-xserver-utils libx11-dev watchdog chkconfig
+sudo apt-get install -y xinit scrot git lsb-core fbi uzbl matchbox-window-manager supervisor x11-xserver-utils ttf-mscorefonts-installer xwit sqlite3 libnss3 python-pip python-dev python-simplejson python-imaging uzbl sqlite3 omxplayer x11-xserver-utils libx11-dev watchdog chkconfig xosd-bin xserver-xorg-legacy xserver-xorg
 
 echo "Install Hamachi"
-wget https://secure.logmein.com/labs/logmein-hamachi_2.1.0.139-1_armhf.deb
-sudo dpkg -i logmein-hamachi_2.1.0.139-1_armhf.deb 
+wget http://vpn.net/installers/logmein-hamachi_2.1.0.174-1_armhf.deb
+sudo dpkg -i logmein-hamachi_2.1.0.174-1_armhf.deb
+sleep 50000 
 sudo hamachi login
 sudo hamachi attach kristan@webbitpro.co.uk
 
@@ -93,8 +94,11 @@ sudo mv "$HOME/dphys-swapfile" /etc/dphys-swapfile
 
 echo "Enabling Watchdog..."
 sudo modprobe bcm2708_wdog > /dev/null
+#module name has changed... perhaps need to detect this?
+sudo modprobe bcm2835_wdt > /dev/null
 sudo cp /etc/modules /etc/modules.bak
 sudo sed '$ i\bcm2708_wdog' -i /etc/modules
+sudo sed '$ i\bcm2835_wdt' -i /etc/modules
 sudo chkconfig watchdog on
 sudo cp /etc/watchdog.conf /etc/watchdog.conf.bak
 sudo sed -e 's/#watchdog-device/watchdog-device/g' -i /etc/watchdog.conf
