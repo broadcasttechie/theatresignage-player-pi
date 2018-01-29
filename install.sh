@@ -35,7 +35,7 @@ sudo apt-get install -y xinit scrot git lsb-core fbi uzbl matchbox-window-manage
 echo "Install Hamachi"
 wget http://vpn.net/installers/logmein-hamachi_2.1.0.174-1_armhf.deb
 sudo dpkg -i logmein-hamachi_2.1.0.174-1_armhf.deb
-sleep 50000 
+sleep 50s
 sudo hamachi login
 sudo hamachi attach kristan@webbitpro.co.uk
 
