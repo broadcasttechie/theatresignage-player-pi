@@ -105,16 +105,21 @@ def screenshot_thumb():
 		image_buffer = imageFile.read()
 	response.set_header('Content-type', 'image/jpeg')
 	return image_buffer
-	
 
 @route('/reboot')
 def reboot():
 	os.system('sudo reboot')
 	redirect('/')
 
-@route('/shutdown')
-def reboot():
+@route('/shutdown-actual', method='POST')
+def shutdown():
 	os.system('sudo shutdown -h now')
-	redirect('/')
+	return('Shutting down the system!')
+
+@route('/shutdown')
+@route('/shutdown-actual', method='GET')
+def confirm_shutdow():
+	return('Are you sure? <form method="POST" action="/shutdown-actual"><input type=submit value="YES"/></form><a href=/>NO</a>')
+
 
 run(host="0.0.0.0", port=8080, fast=True, reloader=True)
