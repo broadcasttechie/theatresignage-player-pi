@@ -67,6 +67,19 @@
   </div>
 </div>
 
+<fieldset>
+<legend>
+System Control
+</legend>
+<div class="form-group"><div class="col-md-4">
+  <label class="col-md-4 control-label" for="submit"></label>
+  <div class="col-md-4">
+  <a class="btn btn-success" href="/reboot" role="button">reboot</a>
+  <a class="btn btn-danger" href="/shutdown" role="button">shutdown</a>
+  </div>
+</div>
+</div>
+
 </fieldset>
 </form>
 

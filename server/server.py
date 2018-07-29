@@ -107,4 +107,14 @@ def screenshot_thumb():
 	return image_buffer
 	
 
+@route('/reboot')
+def reboot():
+	os.system('sudo reboot')
+	redirect('/')
+
+@route('/shutdown')
+def reboot():
+	os.system('sudo shutdown -h now')
+	redirect('/')
+
 run(host="0.0.0.0", port=8080, fast=True, reloader=True)
