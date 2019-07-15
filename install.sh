@@ -30,14 +30,7 @@ echo "Install some stuff"
 
 # sudo dpkg-reconfigure ssh
 
-sudo apt-get install -y xinit scrot git lsb-core fbi uzbl matchbox-window-manager supervisor x11-xserver-utils ttf-mscorefonts-installer xwit sqlite3 libnss3 python-pip python-dev python-simplejson python-imaging uzbl sqlite3 omxplayer x11-xserver-utils libx11-dev watchdog chkconfig xosd-bin xserver-xorg-legacy xserver-xorg
-
-echo "Install Hamachi"
-wget http://vpn.net/installers/logmein-hamachi_2.1.0.174-1_armhf.deb
-sudo dpkg -i logmein-hamachi_2.1.0.174-1_armhf.deb
-sleep 50s
-sudo hamachi login
-sudo hamachi attach kristan@webbitpro.co.uk
+sudo apt-get install -y xinit scrot git fbi uzbl matchbox-window-manager supervisor x11-xserver-utils ttf-mscorefonts-installer xwit sqlite3 libnss3 python-pip python-dev python-simplejson python-imaging uzbl sqlite3 omxplayer x11-xserver-utils libx11-dev watchdog chkconfig xosd-bin xserver-xorg-legacy xserver-xorg
 
 echo "Configure ntp"
 #http://raspberrypi.stackexchange.com/questions/266/how-can-i-keep-system-time
@@ -66,9 +59,6 @@ git clone https://github.com/broadcasttechie/theatresignage-player-pi.git "$HOME
 echo "Configure player startup"
 #http://blogs.wcode.org/2013/09/howto-boot-your-raspberry-pi-into-a-fullscreen-browser-kiosk/
 
-
-sudo sed -i -e '$i \/etc/init.d/logmein-hamachi start' /etc/rc.local
-sudo sed -i -e '$i \hamachi login \&\n' /etc/rc.local
 
 sudo sed -i -e '$i \if \[ \-f /boot/xinitrc \]\; then' /etc/rc.local
 sudo sed -i -e '$i \    \tln -fs /boot/xinitrc /home/pi/\.xinitrc;' /etc/rc.local
