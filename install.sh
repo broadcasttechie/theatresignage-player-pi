@@ -30,7 +30,7 @@ echo "Install some stuff"
 
 # sudo dpkg-reconfigure ssh
 
-sudo apt-get install -y xinit scrot git fbi uzbl matchbox-window-manager supervisor x11-xserver-utils ttf-mscorefonts-installer xwit sqlite3 libnss3 python-pip python-dev python-simplejson python-imaging uzbl sqlite3 omxplayer x11-xserver-utils libx11-dev watchdog chkconfig xosd-bin xserver-xorg-legacy xserver-xorg
+sudo apt-get install -y python-pil xinit scrot git fbi uzbl matchbox-window-manager supervisor x11-xserver-utils ttf-mscorefonts-installer xwit sqlite3 libnss3 python-pip python-dev python-simplejson python-imaging uzbl sqlite3 omxplayer x11-xserver-utils libx11-dev watchdog chkconfig xosd-bin xserver-xorg-legacy xserver-xorg
 
 echo "Configure ntp"
 #http://raspberrypi.stackexchange.com/questions/266/how-can-i-keep-system-time
